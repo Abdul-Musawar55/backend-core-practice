@@ -2,13 +2,13 @@
 const User = require("../models/user.model")
 
 exports.createUser = async(req, res) => {
-    const {fullName, email, age} = req.body;
+    const {fullName, email, password} = req.body;
 
-    if(!fullName || !email || !age){
+    if(!fullName || !email || !password){
         return res.status(400).send({isSuccess: false, message: "All fields are required!"})
     }
     try {
-        const newUser = await User.create({fullName, email,age})
+        const newUser = await User.create({fullName, email,password})
         res.status(200).send({isSuccess: true, message: "User save in db successfully!", data: newUser})
     } catch (error) {
         res.status(500).send({isSuccess: false, message: "Server Error", error: error.message})

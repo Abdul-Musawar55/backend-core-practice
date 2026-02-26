@@ -20,6 +20,7 @@ app.get("/secure",checkApiKey, checkAge, notFound, (req, res)=>{
     res.status(200).send({message: "Hello World!"})
 })
 
+app.use("/api/V1/auth", require("./routes/auth.route"))
 app.use("/api/V1/users", require("./routes/user.route"))
 app.use("/api/V1/products", require("./routes/product.route"));
 

@@ -24,7 +24,22 @@ exports.getProductsById = async(req, res) => {
     res.json(product)
 }
 
+
 exports.DeletedProduct = async(req, res) =>{
     await Product.findByIdAndDeleted(req.params.id)
     res.json({message: "Product Deleted!"})
+}
+
+exports.updateProduct = async(req, res) =>{
+    try {
+        const {id} = req.params;
+        const updateProduct = await Product.findByIdAndUpdate(id, req.body, {new: true});
+
+        if(!updateProduct){
+            return res.status(404).send({isSuccess: false, message: "Product not found!"})
+        }
+        res.status(200).send({isSuccess: true, message: "Product update successfully!", product: updateProduct})
+    } catch (error) {
+        res.status(500).send({isSuccess: false, message: "Error updating product:", error: error.message})
+    }
 }
